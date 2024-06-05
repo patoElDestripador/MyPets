@@ -26,5 +26,7 @@ namespace MyPets.Controller.Quotes
             }
             return Ok(result);
         }
+
+        
     }
 }

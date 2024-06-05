@@ -26,9 +26,18 @@ namespace MyPets.Repository.Owners
             return await _dbContext.Quotes.Include(e => e.Pet).Include(e => e.Vet).ToListAsync();
         }
 
+        public Task<List<Quote>> GetQuotesByDayAsync(DateOnly date)
+        {
+            return _dbContext.Quotes.Include(e => e.Pet).Include(e => e.Vet).Where(d => d.Date == date).ToListAsync();
+        }
+
         public async Task<Quote> GetQuotesByIdAsync(int id)
         {
             return await _dbContext.Quotes.Include(e => e.Pet).Include(e => e.Vet).FirstOrDefaultAsync(e => e.Id == id);
+        }
+        public Task<List<Quote>> GetQuotesByVetIdAsync(int vetId)
+        {
+            return _dbContext.Quotes.Include(e => e.Pet).Include(e => e.Vet).Where(d => d.VetId == vetId).ToListAsync();
         }
 
         public async Task<Quote> UpdateQuoteAsync(Quote quote)
@@ -37,5 +46,8 @@ namespace MyPets.Repository.Owners
             await _dbContext.SaveChangesAsync();
             return quote;
         }
+
+
+
     }
 }

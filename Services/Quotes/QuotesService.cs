@@ -1,3 +1,4 @@
+using System.Globalization;
 using MyPets.Model;
 using MyPets.Repository.Owners;
 using MyPets.Repository.Pets;
@@ -65,6 +66,31 @@ namespace MyPets.Services.Quotes
                 VetId = quoteDTO.VetId,
             };
             return new ResponseUtils<Quote>(true, new List<Quote> { await _QuotesRepository.UpdateQuoteAsync(quote) });
+        }
+
+        public async Task<ResponseUtils<Quote>> GetQuotesByDayAsync(string request)
+        {
+            if (DateOnly.TryParseExact(request, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly dateValue))
+            {
+                var existinDay = await _QuotesRepository.GetQuotesByDayAsync(dateValue);
+                if (existinDay == null)
+                {
+
+                    return new ResponseUtils<Quote>(true, new List<Quote>(existinDay), message: "no se encontro nah");
+                }
+                return new ResponseUtils<Quote>(true, new List<Quote>(existinDay));
+            }
+            return new ResponseUtils<Quote>(false, message: "La fecha es inválida");
+        }
+
+        public async Task<ResponseUtils<Quote>> GetQuotesByVetIdAsync(int id)
+        {
+            var existinId = await _QuotesRepository.GetQuotesByVetIdAsync(id);
+            if (existinId == null)
+            {
+                return new ResponseUtils<Quote>(true, new List<Quote>(existinId), message: "no se encontro nah");
+            }
+            return new ResponseUtils<Quote>(true, new List<Quote>(existinId));
         }
     }
 }

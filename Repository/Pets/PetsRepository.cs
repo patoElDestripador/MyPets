@@ -12,7 +12,7 @@ namespace MyPets.Repository.Pets
         {
             _dbContext = dbContext;
         }
-        public async Task<Pet> CreatePetAsync( Pet pet)
+        public async Task<Pet> CreatePetAsync(Pet pet)
         {
             await _dbContext.Pets.AddAsync(pet);
             await _dbContext.SaveChangesAsync();
@@ -34,6 +34,16 @@ namespace MyPets.Repository.Pets
             _dbContext.Entry(pet).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
             return pet;
+        }
+
+        public async Task<IEnumerable<Pet>> GetPetsByOwnerIdAsync(int id)
+        {
+            return await _dbContext.Pets.Where(d => d.OwnerId == id).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Pet>> GetPetsByBirthDateAsync(DateOnly date)
+        {
+            return await _dbContext.Pets.Where(d => d.DateBirth == date).ToListAsync();
         }
     }
 }

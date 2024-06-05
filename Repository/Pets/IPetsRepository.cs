@@ -6,7 +6,10 @@ namespace MyPets.Repository.Pets
     {
         Task<IEnumerable<Pet>> GetAllPetsAsync();
         Task<Pet> GetPetsByIdAsync(int id);
+        Task<IEnumerable<Pet>> GetPetsByOwnerIdAsync(int id);
+        Task<IEnumerable<Pet>> GetPetsByBirthDateAsync(DateOnly date);
         Task<Pet> CreatePetAsync(Pet pet);
         Task<Pet> UpdatePetAsync(Pet pet);
+        
     }
 }

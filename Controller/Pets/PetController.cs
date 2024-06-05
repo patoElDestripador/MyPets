@@ -29,6 +29,23 @@ namespace MyPets.Controller.Pets
             var Pets = await _Petservice.GetPetsByIdAsync(id);
             return Ok(new ResponseUtils<Pet>(true, new List<Pet> { Pets }));
         }
+        [HttpGet("{id}/owner")]
+        public async Task<ActionResult<ResponseUtils<Pet>>> GetPetsByOwnerIdAsync(int id)
+        {
+            var Pets = await _Petservice.GetPetsByOwnerIdAsync(id);
+            return Ok(new ResponseUtils<Pet>(true, new List<Pet>(Pets)));
+        }
+        [HttpGet("{date}/birthday")]
+        public async Task<IActionResult> GetPetsByBirthDateAsync(string date)
+        {
+            ResponseUtils<Pet> result = await _Petservice.GetPetsByBirthDateAsync(date);
+            if (!result.Status)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
+        
     }
 }

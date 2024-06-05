@@ -9,5 +9,8 @@ namespace MyPets.Services.Quotes
         Task<Quote> GetQuotesByIdAsync(int id);
         Task<ResponseUtils<Quote>> CreateQuoteAsync(QuoteDTO Quote);
         Task<ResponseUtils<Quote>> UpdateQuoteAsync(int id,QuoteDTO Quote);
+        Task<ResponseUtils<Quote>> GetQuotesByDayAsync(string date);
+        Task<ResponseUtils<Quote>> GetQuotesByVetIdAsync(int id);
+        
     }
 }

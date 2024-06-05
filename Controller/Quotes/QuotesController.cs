@@ -30,5 +30,27 @@ namespace MyPets.Controller.Quotes
             return Ok(new ResponseUtils<Quote>(true, new List<Quote> { quotes }));
         }
 
+        [HttpGet("{date}/date")]
+        public async Task<IActionResult> GetAppointmentsByDay(string date)
+        {
+            ResponseUtils<Quote> result = await _Quoteservice.GetQuotesByDayAsync(date);
+            if (!result.Status)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("{id}/vets")]
+        public async Task<IActionResult> GetQuotesByVetIdAsync(int id)
+        {
+            ResponseUtils<Quote> result = await _Quoteservice.GetQuotesByVetIdAsync(id);
+            if (!result.Status)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
     }
 }
